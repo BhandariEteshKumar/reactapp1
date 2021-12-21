@@ -1,4 +1,6 @@
-function Home() {
+import { Movie } from "./Movie";
+import { Button } from "@mui/material";
+function Home({ movies, setMovies }) {
   return (
     <div className="App">
       <div className="inputValue">
@@ -25,21 +27,23 @@ function Home() {
             <label className="col">Summary: </label>
             <textarea className="col"></textarea>
           </div>
-          <button
+          <Button
+            variant="text"
             onClick={(e) => {
               setMovies([...movies, { name: "jdslkf" }]);
               e.preventDefault();
             }}
           >
             Add
-          </button>
+          </Button>
         </form>
       </div>
       <div className="movie-list">
         {movies.map(({ name, poster, rating, summary }, index) => (
           <Movie
             deletebutton={
-              <button
+              <Button
+                variant="contained"
                 onClick={() => {
                   const remaingmovies = movies.filter((movie, index1) => {
                     return index1 !== index;
@@ -48,7 +52,7 @@ function Home() {
                 }}
               >
                 Delete
-              </button>
+              </Button>
             }
             name={name}
             poster={poster}
