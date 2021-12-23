@@ -1,6 +1,5 @@
 import { Movie } from "./Movie";
 import { Button } from "@mui/material";
-import { InputMovie } from "./InputMovie";
 function Home({ movies, setMovies }) {
   return (
     <div className="App">
