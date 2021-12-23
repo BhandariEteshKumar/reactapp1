@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Home } from "./Home";
 import "./index.css";
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import { TicTacToe } from "./tictactoe";
 import { AppBar, Button, Toolbar } from "@mui/material";
 import { useHistory } from "react-router-dom";
@@ -164,11 +164,11 @@ const Button1 = ({ value }) => {
   value = theme;
   console.log(value);
   return (
-    <button
+    <Button
       style={styles}
       onClick={() => setTheme(theme === "light" ? "black" : "light")}
     >
       {value}
-    </button>
+    </Button>
   );
 };

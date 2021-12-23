@@ -1,4 +1,3 @@
-import { Movie } from "./Movie";
 import { Button } from "@mui/material";
 function InputMovie({ movies, setMovies }) {
   return (
@@ -29,7 +28,7 @@ function InputMovie({ movies, setMovies }) {
         <Button
           variant="text"
           onClick={(e) => {
-            setMovies([...movies, { name: "jdslkf" }]);
+            setMovies([...movies, { name: {} }]);
             e.preventDefault();
           }}
         >
