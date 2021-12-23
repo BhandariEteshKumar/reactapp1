@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 import { Home } from "./Home";
 import "./index.css";
+import { Switch, Route, Link } from "react-router-dom";
+import { TicTacToe } from "./tictactoe";
+import { AppBar, Button, Toolbar } from "@mui/material";
+import { useHistory } from "react-router-dom";
+import { InputMovie } from "./InputMovie";
+import { createContext, useContext } from "react";
+
+const themeCtx = createContext(null);
 
 export default function App() {
   const [movies, setMovies] = useState([
@@ -75,10 +83,92 @@ export default function App() {
       trailer: "https://www.youtube.com/embed/NgsQ8mVkN8w",
     },
   ]);
-  // let add = () => {
-  //   setMovies([...movies, { name: "abc" }]);
-  //   console.log(movies);
-  //   // console.log("so");
-  // };
-  return <Home movies={movies} setMovies={setMovies} />;
+  const history = useHistory();
+
+  const [theme, setTheme] = useState("light");
+  const stylesbg = {
+    background: theme === "light" ? "black" : "white",
+    color: theme === "light" ? "orange" : "black",
+  };
+  let val = "light";
+
+  return (
+    <themeCtx.Provider value={[theme, setTheme]}>
+      <div className="app" style={stylesbg}>
+        <AppBar>
+          <Toolbar>
+            <Button
+              color="inherit"
+              onClick={() => {
+                history.push("/");
+              }}
+            >
+              Home
+            </Button>
+            <Button
+              color="inherit"
+              onClick={() => {
+                history.push("/game");
+              }}
+            >
+              Game
+            </Button>
+            <Button
+              color="inherit"
+              onClick={() => {
+                history.push("/inputmovie");
+              }}
+            >
+              Add Movie
+            </Button>
+            {/* <Button color="inherit" onClick={Backgroud()}>
+              {theme}
+            </Button> */}
+            <ListItem val={val} setTheme={setTheme} theme={theme} />
+          </Toolbar>
+        </AppBar>
+        <br />
+        <br />
+        {/* <nav>
+        <Link to="/">Home</Link>
+        <Link to="/game">Game</Link>
+      </nav> */}
+        <Switch>
+          <Route path="/game">
+            <TicTacToe />
+          </Route>
+          <Route path="/inputmovie">
+            <InputMovie movies={movies} setMovies={setMovies} />
+          </Route>
+          <Route path="/">
+            <Home movies={movies} setMovies={setMovies} />
+          </Route>
+        </Switch>
+      </div>
+    </themeCtx.Provider>
+  );
 }
+
+const ListItem = ({ val }) => (
+  <div>
+    <Button1 value={val} />
+  </div>
+);
+const Button1 = ({ value }) => {
+  const [theme, setTheme] = useContext(themeCtx);
+
+  const styles = {
+    background: theme === "light" ? "white" : "black",
+    color: !(theme === "light") ? "white" : "black",
+  };
+  value = theme;
+  console.log(value);
+  return (
+    <button
+      style={styles}
+      onClick={() => setTheme(theme === "light" ? "black" : "light")}
+    >
+      {value}
+    </button>
+  );
+};
