@@ -1,19 +1,31 @@
 import { Movie } from "./Movie";
 import { Button } from "@mui/material";
+
 function Home({ movies, setMovies }) {
+  let deleteMovie = (id) => {
+    fetch(`https://61c412bff1af4a0017d99279.mockapi.io/movies/${id}`, {
+      method: `DELETE`,
+    }).then((data) => data.json());
+    fetch("https://61c412bff1af4a0017d99279.mockapi.io/movies")
+      .then((data) => data.json())
+      .then((movies) => setMovies(movies));
+    console.log(movies);
+  };
+
   return (
     <div className="App">
       <div className="movie-list">
-        {movies.map(({ name, poster, rating, summary }, index) => (
+        {movies.map(({ name, poster, rating, summary, id }, index) => (
           <Movie
             deletebutton={
               <Button
                 variant="contained"
                 onClick={() => {
-                  const remaingmovies = movies.filter((movie, index1) => {
-                    return index1 !== index;
-                  });
-                  setMovies(remaingmovies);
+                  // const remaingmovies = movies.filter((movie, index1) => {
+                  //   return index1 !== index;
+                  // });
+                  // setMovies(remaingmovies);
+                  deleteMovie(id);
                 }}
               >
                 Delete
