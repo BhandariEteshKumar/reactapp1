@@ -2,14 +2,18 @@ import { Movie } from "./Movie";
 import { Button } from "@mui/material";
 
 function Home({ movies, setMovies }) {
-  let deleteMovie = (id) => {
-    fetch(`https://61c412bff1af4a0017d99279.mockapi.io/movies/${id}`, {
-      method: `DELETE`,
-    }).then((data) => data.json());
+  function getData() {
     fetch("https://61c412bff1af4a0017d99279.mockapi.io/movies")
       .then((data) => data.json())
       .then((movies) => setMovies(movies));
-    console.log(movies);
+    console.log(movies, "Get");
+  }
+  let deleteMovie = (id) => {
+    fetch(`https://61c412bff1af4a0017d99279.mockapi.io/movies/${id}`, {
+      method: `DELETE`,
+    })
+      .then((data) => data.json())
+      .then(setTimeout(getData(), 1000000));
   };
 
   return (
@@ -35,6 +39,7 @@ function Home({ movies, setMovies }) {
             poster={poster}
             rating={rating}
             summary={summary}
+            id={id}
           />
         ))}
       </div>

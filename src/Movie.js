@@ -1,7 +1,8 @@
 import { Button } from "@mui/material";
 import { useState } from "react";
+import { Modifymovie } from "./App";
 
-function Movie({ deletebutton, name, poster, rating, summary }) {
+function Movie({ deletebutton, name, poster, rating, summary, id }) {
   const style1 = { color: "red" };
   const style2 = { color: "green" };
   let [like, setLike] = useState(0);
@@ -29,6 +30,7 @@ function Movie({ deletebutton, name, poster, rating, summary }) {
       <p className="movie-summary">{summary}</p>
       <Button onClick={() => setLike(like + 1)}>👍{like}</Button>
       <Button onClick={() => setdisLike(dislike + 1)}>👎🏻{dislike}</Button>
+      <Modifymovie id={id} />
       {deletebutton}
     </div>
   );

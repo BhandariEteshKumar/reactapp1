@@ -7,8 +7,10 @@ import { AppBar, Button, Toolbar } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import { InputMovie } from "./InputMovie";
 import { createContext, useContext } from "react";
+import { Modify } from "./Modify";
 
 const themeCtx = createContext(null);
+const movieCtx = createContext(null);
 
 export default function App() {
   const [movies, setMovies] = useState([]);
@@ -34,61 +36,88 @@ export default function App() {
   let val = "light";
 
   return (
-    <themeCtx.Provider value={[theme, setTheme]}>
-      <div className="app" style={stylesbg}>
-        <AppBar>
-          <Toolbar>
-            <Button
-              color="inherit"
-              onClick={() => {
-                history.push("/");
-              }}
-            >
-              Home
-            </Button>
-            <Button
-              color="inherit"
-              onClick={() => {
-                history.push("/game");
-              }}
-            >
-              Game
-            </Button>
-            <Button
-              color="inherit"
-              onClick={() => {
-                history.push("/inputmovie");
-              }}
-            >
-              Add Movie
-            </Button>
-            {/* <Button color="inherit" onClick={Backgroud()}>
+    <movieCtx.Provider value={[movies, setMovies]}>
+      <themeCtx.Provider value={[theme, setTheme]}>
+        <div className="app" style={stylesbg}>
+          <AppBar>
+            <Toolbar>
+              <Button
+                color="inherit"
+                onClick={() => {
+                  history.push("/");
+                }}
+              >
+                Home
+              </Button>
+              <Button
+                color="inherit"
+                onClick={() => {
+                  history.push("/game");
+                }}
+              >
+                Game
+              </Button>
+              <Button
+                color="inherit"
+                onClick={() => {
+                  history.push("/inputmovie");
+                }}
+              >
+                Add Movie
+              </Button>
+              {/* <Button color="inherit" onClick={Backgroud()}>
               {theme}
             </Button> */}
-            <ListItem val={val} setTheme={setTheme} theme={theme} />
-          </Toolbar>
-        </AppBar>
-        <br />
-        <br />
-        {/* <nav>
+              <ListItem val={val} setTheme={setTheme} theme={theme} />
+            </Toolbar>
+          </AppBar>
+          <br />
+          <br />
+          {/* <nav>
         <Link to="/">Home</Link>
         <Link to="/game">Game</Link>
       </nav> */}
-        <Switch>
-          <Route path="/game">
-            <TicTacToe />
-          </Route>
-          <Route path="/inputmovie">
-            <InputMovie movies={movies} setMovies={setMovies} />
-          </Route>
-          <Route path="/">
-            <Home movies={movies} setMovies={setMovies} />
-          </Route>
-        </Switch>
-      </div>
-    </themeCtx.Provider>
+          <Switch>
+            <Route path="/game">
+              <TicTacToe />
+            </Route>
+            <Route path="/inputmovie">
+              <InputMovie movies={movies} setMovies={setMovies} />
+            </Route>
+            <Route path="/modify">
+              <Modify movies={movies} setMovies={setMovies} />
+            </Route>
+            <Route path="/">
+              <Home movies={movies} setMovies={setMovies} />
+            </Route>
+          </Switch>
+        </div>
+      </themeCtx.Provider>
+    </movieCtx.Provider>
   );
 }
+
+const Modifymovie = ({ id }) => (
+  <div>
+    <ModifyMovie id={id} />
+  </div>
+);
+let idd;
+const ModifyMovie = ({ id }) => {
+  // const [movies, setMovies] = useContext(movieCtx);
+  const history = useHistory();
+  return (
+    <Button
+      color="inherit"
+      onClick={() => {
+        history.push("/modify");
+        idd = id;
+      }}
+    >
+      Modify
+    </Button>
+  );
+};
 
 const ListItem = ({ val }) => (
   <div>
@@ -113,3 +142,6 @@ const Button1 = ({ value }) => {
     </Button>
   );
 };
+
+export { idd };
+export { Modifymovie };
